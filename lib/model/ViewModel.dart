@@ -1,18 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_test/util/Repository.dart';
 
-final postViewModel = StateNotifierProvider<PostViewModel, dynamic>((ref) => PostViewModel([], ref)..getAll());
+import '../util/Post.dart';
 
-class PostViewModel extends StateNotifier<dynamic> {
-  PostViewModel(super.state, this._ref);
+final postViewModel =
+    StateNotifierProvider<PostViewModel, List<List<String>>>((ref) => PostViewModel([], ref)..initViewModel());
+
+class PostViewModel extends StateNotifier<List<List<String>>> {
   Ref _ref;
+  PostViewModel(super.state, this._ref);
 
-  void getAll() async {
+  void initViewModel() async {
     List<List<String>> postList = await _ref.read(repository).getAll();
     state = postList;
   }
 
-  void addList(List<List<String>> postList) {
-    state = [...state, postList];
+  void refresh(List<List<String>> postList) {
+    state = postList;
   }
 }

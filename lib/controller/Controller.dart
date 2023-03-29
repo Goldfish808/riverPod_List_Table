@@ -14,6 +14,6 @@ class PostController {
 
   void find() {
     List<List<String>> postList = _ref.read(repository).getAll();
-    _ref.read(postViewModel.notifier).addList(postList);
+    _ref.read(postViewModel.notifier).refresh(postList);
   }
 }
